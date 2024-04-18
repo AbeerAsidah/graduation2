@@ -16,8 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $scolarships = ArticleResource::collection(Article::get());
-        return $this->apiResponse($scolarships, 'ok', 200);
+        $article = ArticleResource::collection(Article::get());
+        return $this->apiResponse($article, 'ok', 200);
     }
 
    
@@ -55,25 +55,33 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $article= Article::find($id);
+        if($article){
+            return $this->apiResponse(new ArticleResource($article) , 'ok' ,200);
+        }
+        return $this->apiResponse(null ,'the article not found' ,404);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
-        //
+        $article= Article::find($id);
+        if(!$article)
+        {
+            return $this->apiResponse(null ,'the article not found ',404);
+        }
+        $article->update($request->all());
+        if($article)
+        {
+            return $this->apiResponse(new ArticleResource($article) , 'the article update',201);
+
+        }
     }
 
     /**
@@ -81,6 +89,14 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $article = Article::find($id);
+        if(!$article)
+        {
+            return $this->apiResponse(null ,'the article not found ',404);
+        }
+        $article->delete($id);
+        if($article)
+            return $this->apiResponse(null ,'the  article delete ',200);
     }
 }

@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Traits\ApiResponseTrait;
+use App\Http\Resources\ProjectResource;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
+
+
 
 class ProjectController extends Controller
 {

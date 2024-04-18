@@ -28,7 +28,7 @@ class InvestorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Investor $investor)
+    public function show($id)
     {
         $Investor= Investor::find($id);
         if($Investor){
