@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Traits\ApiResponseTrait;
 
 use App\Models\Tracking;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,8 @@ use App\Http\Resources\TrackingResource;
 
 class TrackingController extends Controller
 {
-    
+    use ApiResponseTrait;
+
     public function index()
     {
         $Tracking = TrackingResource::collection(Tracking::get());
