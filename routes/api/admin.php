@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\PassportAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +22,14 @@ Route::group(['middleware' => ['auth:investor-api,user-api,admin-api']], functio
         Route::get('/{id}',[\App\Http\Controllers\TypeController::class,'show']);
         Route::get('/',[\App\Http\Controllers\TypeController::class,'index']);
     });
+
+
+    Route::prefix("/{id}/Evaluation")->group(function (){
+              Route::get('/', [EvaluationController::class, 'index']);
+              Route::post('/', [EvaluationController::class, 'store']);
+              Route::post('delete', [EvaluationController::class, 'destroy']);
+    });
+
 });
 
 
