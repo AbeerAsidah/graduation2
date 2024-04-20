@@ -16,7 +16,6 @@ use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\RefreshToken;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
-use App\Models\Investor;
 use App\Traits\ApiResponseTrait;
 
 class PassportAuthController extends Controller

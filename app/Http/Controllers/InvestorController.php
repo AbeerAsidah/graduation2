@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Traits\ApiResponseTrait;
 
 use App\Models\Investor;
 use App\Http\Controllers\Controller;
@@ -10,7 +11,8 @@ use App\Http\Resources\InvestorResource;
 
 class InvestorController extends Controller
 {
-   
+    use ApiResponseTrait;
+
     public function index()
     {
         $Investor = InvestorResource::collection(Investor::get());

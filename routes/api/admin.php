@@ -30,6 +30,13 @@ Route::group(['middleware' => ['auth:investor-api,user-api,admin-api']], functio
               Route::post('delete', [EvaluationController::class, 'destroy']);
     });
 
+    
+    Route::prefix("projects")->group(function (){
+        Route::get('/',[\App\Http\Controllers\ProjectController::class,'index']);
+        Route::get('/{id}',[\App\Http\Controllers\ProjectController::class,'show']);
+        
+    });
+
 });
 
 
@@ -43,6 +50,16 @@ Route::group(['middleware' => ['auth:investor-api,admin-api']], function () {
 
 
 
+Route::group(['middleware' => ['auth:user-api,admin-api']], function () {
+
+    Route::prefix("projects")->group(function (){
+        Route::post('delete/{id}',[\App\Http\Controllers\ProjectController::class,'destroy']);
+        
+    });
+});
+
+
+
 
 Route::post('admin/login',[\App\Http\Controllers\PassportAuthController::class,'adminLogin'])->name('adminLogin');
 
@@ -51,15 +68,6 @@ Route::group( ['prefix' => 'admin','middleware' => ['auth:admin-api','scopes:adm
     //Route::get('dashboard',[PassportAuthController::class,'adminDashboard']);
     Route::get('logout',[PassportAuthController::class,'adminlogout'])->name('adminLogout');
     Route::post('delete/{id}', [\App\Http\Controllers\PassportAuthController::class, 'destroy']);
-
-
-        //Project
-        Route::prefix("projects")->group(function (){
-            Route::get('/',[\App\Http\Controllers\ProjectController::class,'index']);
-            Route::get('/{id}',[\App\Http\Controllers\ProjectController::class,'show']);
-            Route::post('delete/{id}',[\App\Http\Controllers\ProjectController::class,'destroy']);
-            
-        });
 
 
 

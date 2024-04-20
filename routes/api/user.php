@@ -40,11 +40,8 @@ Route::group( ['prefix' =>'user','middleware' => ['auth:user-api','scopes:user']
 
 //Project
 Route::prefix("projects")->group(function (){
-  Route::get('/',[\App\Http\Controllers\ProjectController::class,'index']);
   Route::post('/',[\App\Http\Controllers\ProjectController::class,'store']);
-  Route::get('/{id}',[\App\Http\Controllers\ProjectController::class,'show']);
   Route::post('update/{id}',[\App\Http\Controllers\ProjectController::class,'update']);
-  Route::post('delete/{id}',[\App\Http\Controllers\ProjectController::class,'destroy']);
 });
 
 
