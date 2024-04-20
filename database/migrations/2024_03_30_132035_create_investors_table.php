@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('user_type');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone');
-            $table->text('location');
-            $table->text('iD_card');
-            $table->text('personal_photo');
+            $table->string('phone')->nullable();
+            $table->text('location')->nullable();
+            $table->text('iD_card')->nullable();
+            $table->text('personal_photo')->nullable();
             $table->timestamps();
         });
     }

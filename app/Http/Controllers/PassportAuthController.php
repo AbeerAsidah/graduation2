@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Investor;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 // use Illuminate\Http\Response;
@@ -161,6 +162,7 @@ class PassportAuthController extends Controller
 
 
     
+    
     ///Investor
     public function registerInvestor(Request $request)
     {
@@ -169,11 +171,8 @@ class PassportAuthController extends Controller
             'last_name' => [ 'required' , 'string','min:3'],
             'email' => ['required', 'string', 'email', 'max:255' ,'unique:users',],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['required', 'string'],
-            'location' => ['required', 'text'],
-            'iD_card' => ['required', 'text'],
-            'personal_photo' => ['required', 'text'],
-         
+
+                
         ]);
 
         if ($validator->fails()) {
@@ -185,13 +184,17 @@ class PassportAuthController extends Controller
         $investor = Investor::create([
             'first_name'=> $request->first_name,
             'last_name'=> $request->last_name,
+            'user_type' => 'investor',
             'email' => $request->email,
             'password' => $request->password,
-            'phone' => $request->phone,
-            'location' => $request->location,
-            'iD_card' => $request->iD_card,
-            'personal_photo' => $request->personal_photo,
+            'phone' => null,
+            'location' => null,
+            'iD_card' => null,
+            'personal_photo' => null,
+           
         ]);
+
+     
 
         if ($tokenResult = $investor->createToken('Personal Access Token')) {
             $data["message"] = 'User successfully registered';
@@ -205,6 +208,7 @@ class PassportAuthController extends Controller
 
         return response()->json(['error' => ['Email and Password are wrong.']], 401);
     }
+
 
 
 
@@ -223,7 +227,7 @@ class PassportAuthController extends Controller
         if(auth()->guard('investor')->attempt(['email' => request('email'), 'password' => request('password')])){
 
             config(['auth.guards.api.provider' => 'investor']);
-            $investor = investor::select('investors.*')->find(auth()->guard('investor')->user()->id);
+            $investor = Investor::select('investors.*')->find(auth()->guard('investor')->user()->id);
             $success =  $investor;
             $success["user_type"] = 'investor ';
             $success['token'] =  $investor->createToken('MyApp',['investor'])->accessToken;
@@ -237,12 +241,11 @@ class PassportAuthController extends Controller
 
 
 
-    public function logoutInvestor(Request $request)
+    public function LogoutInvestor(Request $request)
     {
-        Auth::guard('investor-api')->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        $token=$request->user()->token();
+        $token->revoke();
+        return response()->json([  'message' => 'Successfully logged out' ]);
     }
 
 

@@ -25,6 +25,15 @@ Route::group(['middleware' => ['auth:investor-api,user-api,admin-api']], functio
 });
 
 
+Route::group(['middleware' => ['auth:investor-api,admin-api']], function () {
+
+        //Investor
+          Route::prefix("investors")->group(function (){
+            Route::post('delete/{id}',[\App\Http\Controllers\InvestorController::class,'destroy']);
+        });
+});
+
+
 
 
 Route::post('admin/login',[\App\Http\Controllers\PassportAuthController::class,'adminLogin'])->name('adminLogin');
@@ -70,13 +79,10 @@ Route::group( ['prefix' => 'admin','middleware' => ['auth:admin-api','scopes:adm
 
 
           //Investor
-          Route::prefix("trackings")->group(function (){
+          Route::prefix("investors")->group(function (){
 
             Route::get('/',[\App\Http\Controllers\InvestorController::class,'index']);
-            Route::post('/',[\App\Http\Controllers\TrackingController::class,'store']);
-            Route::get('/{id}',[\App\Http\Controllers\TrackingController::class,'show']);
-            Route::post('update/{id}',[\App\Http\Controllers\TrackingController::class,'update']);
-            Route::post('delete/{id}',[\App\Http\Controllers\TrackingController::class,'destroy']);
+            Route::get('/{id}',[\App\Http\Controllers\InvestorController::class,'show']);
         });
 
         Route::prefix("Article")->group(function (){

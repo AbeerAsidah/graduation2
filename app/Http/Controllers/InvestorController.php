@@ -41,16 +41,34 @@ class InvestorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Investor $investor)
+    public function update(Request $request,  $id)
     {
-        //
+        $Investor= Investor::find($id);
+        if(!$Investor)
+        {
+            return $this->apiResponse(null ,'the Investor not found ',404);
+        }
+
+        $Investor->update($request->all());
+        if($Investor)
+        {
+            return $this->apiResponse(new InvestorResource($Investor) , 'the Investor update',201);
+
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Investor $investor)
+    public function destroy( $id)
     {
-        //
+        $Investor =  Investor::find($id);
+
+        if(!$Investor){
+            return $this->apiResponse(null, 'This Investor not found', 404);
+        }
+
+        $Investor->delete($id);
+            return $this->apiResponse(null, 'This Investor deleted', 200);
     }
 }
