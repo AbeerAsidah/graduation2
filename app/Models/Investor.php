@@ -29,4 +29,9 @@ class Investor extends Authenticatable
         return $this->hasMany( Complaint::class,'investor_id');
 
     }
+
+    public function evaluations()
+    {
+        return $this->morphMany(Evaluation::class, 'evaluable');
+    }
 }

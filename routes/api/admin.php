@@ -38,7 +38,6 @@ Route::group( ['prefix' => 'admin','middleware' => ['auth:admin-api','scopes:adm
 
         //Project
         Route::prefix("projects")->group(function (){
-
             Route::get('/',[\App\Http\Controllers\ProjectController::class,'index']);
             Route::get('/{id}',[\App\Http\Controllers\ProjectController::class,'show']);
             Route::post('delete/{id}',[\App\Http\Controllers\ProjectController::class,'destroy']);
@@ -49,7 +48,6 @@ Route::group( ['prefix' => 'admin','middleware' => ['auth:admin-api','scopes:adm
 
         //Complaint
         Route::prefix("complaints")->group(function (){
-
             Route::get('/',[\App\Http\Controllers\ComplaintController::class,'index']);
             Route::get('/{id}',[\App\Http\Controllers\ComplaintController::class,'show']);
             Route::post('delete/{id}',[\App\Http\Controllers\ComplaintController::class,'destroy']);

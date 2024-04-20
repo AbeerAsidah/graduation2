@@ -10,12 +10,14 @@ use App\Models\Type;
 
 class TypeController extends Controller
 {
+
+    use ApiResponseTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $type = Type::collection(Type::get());
+        $type = TypeResource::collection(Type::get());
         return $this->apiResponse($type, 'ok', 200);
     }
 

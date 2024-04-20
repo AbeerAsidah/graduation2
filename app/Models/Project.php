@@ -19,7 +19,7 @@ class Project extends Model
 
 
     public function investor(){
-        return $this->belongsTo(User::class,'investor_id');
+        return $this->belongsTo(Investor::class,'investor_id');
     }
 
     public function user(){
@@ -27,7 +27,7 @@ class Project extends Model
     }
 
     public function type(){
-        return $this->belongsTo(User::class,'type_id');
+        return $this->belongsTo(Type::class,'type_id');
     }
 
 
@@ -40,7 +40,7 @@ class Project extends Model
     }
 
     public function statistics(){
-        return $this->hasOne( Statistic::class,'project_id');
+        return $this->hasMany( Statistic::class,'project_id');
     }
 
     public function interests(){

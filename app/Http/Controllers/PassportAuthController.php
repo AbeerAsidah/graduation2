@@ -15,6 +15,7 @@ use Laravel\Passport\HasApiTokens;
 use Laravel\Passport\RefreshToken;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
+use App\Models\Investor;
 use App\Traits\ApiResponseTrait;
 
 class PassportAuthController extends Controller
@@ -223,7 +224,7 @@ class PassportAuthController extends Controller
         if(auth()->guard('investor')->attempt(['email' => request('email'), 'password' => request('password')])){
 
             config(['auth.guards.api.provider' => 'investor']);
-            $investor = investor::select('investors.*')->find(auth()->guard('investor')->user()->id);
+            $investor = Investor::select('investors.*')->find(auth()->guard('investor')->user()->id);
             $success =  $investor;
             $success["user_type"] = 'investor ';
             $success['token'] =  $investor->createToken('MyApp',['investor'])->accessToken;

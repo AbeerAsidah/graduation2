@@ -17,4 +17,10 @@ class Type extends Model
 
     public $timestamps=true ;
 
+
+    public function projects(){
+        return $this->hasMany( Project::class,'type_id');
+    }
+
+
 }
