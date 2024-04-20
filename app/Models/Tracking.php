@@ -10,7 +10,7 @@ class Tracking extends Model
     use HasFactory;
 
     
-    protected $table = "projects";
+    protected $table = "trackings";
 
     protected $fillable = ['earning','cost','tax','outcome','resources_change','project_id',];
 

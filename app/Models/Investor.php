@@ -14,9 +14,9 @@ class Investor extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     
-    protected $table = "projects";
+    protected $table = "investors";
 
-    protected $fillable = ['first_name','last_name','email','password','phone','location','iD_card','personal_photo',];
+    protected $fillable = ['first_name','last_name','user_type','email','password','phone','location','iD_card','personal_photo',];
 
     protected $primaryKey = "id";
     public $timestamps = true ;
