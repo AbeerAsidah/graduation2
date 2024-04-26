@@ -75,9 +75,9 @@ class UserController extends Controller
 
 
 
-function createMultipleProjects()
+function createMultipleProjects($count)
 {
-    $projects = Project::factory()->count(10)->create();
+    $projects = Project::factory()->count($count)->create();
     return $projects;
 }
 }

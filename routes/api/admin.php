@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\UserController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +48,8 @@ Route::group(['middleware' => ['auth:investor-api,admin-api']], function () {
           Route::prefix("investors")->group(function (){
             Route::post('delete/{id}',[\App\Http\Controllers\InvestorController::class,'destroy']);
         });
+
+
 });
 
 
@@ -111,5 +115,11 @@ Route::group( ['prefix' => 'admin','middleware' => ['auth:admin-api','scopes:adm
             Route::post('update/{id}',[\App\Http\Controllers\TypeController::class,'update']);
             Route::post('delete/{id}',[\App\Http\Controllers\TypeController::class,'destroy']);
         });
+
+
+            
+
+        Route::get('/create-fake-users/{count}', [UserController::class, 'createMultipleUsers']);
+        Route::get('/create-fake-projects/{count}', [UserController::class, 'createMultipleProjects']);
 
     });

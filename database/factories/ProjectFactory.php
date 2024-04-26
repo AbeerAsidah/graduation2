@@ -25,9 +25,15 @@ class ProjectFactory extends Factory
              'feasibility_study' => $this->faker->paragraph,
              'amount' => $this->faker->numberBetween(1000, 10000),
              'location' => $this->faker->address,
-             'investor_id' => random_int(1, 10), // استخدام قيمة عشوائية مباشرة
-             'user_id' => random_int(1, 10), // استخدام قيمة عشوائية مباشرة
-             'type_id' => random_int(1, 5), // استخدام قيمة عشوائية مباشرة
+             'investor_id' => function () {
+                return random_int(1, 10);
+            },
+            'user_id' => function () {
+                return random_int(1, 10);
+            },
+            'type_id' => function () {
+                return random_int(1, 5);
+            },
              // يمكنك استخدام القيم العشوائية الخاصة بك للحقول الأخرى
          ];
      }
