@@ -80,43 +80,43 @@ class EvaluationController extends Controller
 
 
 
-public function store(Request $request, $id)
-{
-    $project = Project::find($id);
-    $user = Auth::user();
+// public function store(Request $request, $id)
+// {
+//     $project = Project::find($id);
+//     $user = Auth::user();
 
-    if ($user->user_type === "investor") {
-        $evaluation = $project->evaluations()
-            ->where('evaluable_type', Investor::class)
-            ->where('evaluable_id', $user->id)
-            ->first();
+//     if ($user->user_type === "investor") {
+//         $evaluation = $project->evaluations()
+//             ->where('evaluable_type', Investor::class)
+//             ->where('evaluable_id', $user->id)
+//             ->first();
 
-        if ($evaluation) {
-            $evaluation->delete();
-        } else {
-            $project->evaluations()->create([
-                'evaluable_type' => Investor::class,
-                'evaluable_id' => $user->id,
-            ]);
-        }
-    } else {
-        $evaluation = $project->evaluations()
-            ->where('evaluable_type', User::class)
-            ->where('evaluable_id', $user->id)
-            ->first();
+//         if ($evaluation) {
+//             $evaluation->delete();
+//         } else {
+//             $project->evaluations()->create([
+//                 'evaluable_type' => Investor::class,
+//                 'evaluable_id' => $user->id,
+//             ]);
+//         }
+//     } else {
+//         $evaluation = $project->evaluations()
+//             ->where('evaluable_type', User::class)
+//             ->where('evaluable_id', $user->id)
+//             ->first();
 
-        if ($evaluation) {
-            $evaluation->delete();
-        } else {
-            $project->evaluations()->create([
-                'evaluable_type' => User::class,
-                'evaluable_id' => $user->id,
-            ]);
-        }
-    }
+//         if ($evaluation) {
+//             $evaluation->delete();
+//         } else {
+//             $project->evaluations()->create([
+//                 'evaluable_type' => User::class,
+//                 'evaluable_id' => $user->id,
+//             ]);
+//         }
+//     }
 
-    return response()->json(null);
-}
+//     return response()->json(null);
+// }
 
 
 
