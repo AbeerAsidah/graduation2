@@ -33,18 +33,26 @@ class ProjectController extends Controller
             'feasibility_study' => 'required',
             'amount' => 'required',
             'location' => 'required',
-            'investor_id' => 'required',
             'type_id' => 'required',
         ]);
         if ($validator->fails()) {
             return $this->apiResponse(null, $validator->errors(), 400);
         }
+
+
+        if ($request->hasFile('feasibility_study')) {
+            $file = $request->file('feasibility_study');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('feasibility_study/Project'), $fileName);
+        }
+
+        
         $Project = Project::query()->create([
             'description' => $request->description,
-            'feasibility_study' => $request->feasibility_study,
+            'feasibility_study' => $fileName,
             'amount' => $request->amount,
             'location' => $request->location,
-            'investor_id' => $request->investor_id,
+            'investor_id' => '1',
             'user_id' => Auth::id(),
             'type_id' => $request->type_id,
         ]);

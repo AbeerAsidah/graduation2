@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->text('location');
 
-            $table->foreignId('investor_id')->constrained('investors')->cascadeOnDelete();
+            $table->foreignId('investor_id')->constrained('investors')->cascadeOnDelete()->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('type_id')->constrained('types')->cascadeOnDelete();
             $table->timestamps();

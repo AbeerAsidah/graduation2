@@ -63,29 +63,40 @@ class PassportAuthController extends Controller
     public function register(Request $request){
 
         $validator = Validator::make($request->all(),[
+            'first_name' => [ 'required' , 'string','min:3'],
+            'last_name' => [ 'required' , 'string','min:3'],
             'email' => ['required', 'string', 'email', 'max:255' ,'unique:users',],
             'password' => ['required', 'string', 'min:8'],
-           'first_name' => [ 'required' , 'string','min:3'],
-           'last_name' => [ 'required' , 'string','min:3'],
+
+                
         ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 401);
+
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 401);
         }
+
         $request['password'] = Hash::make($request['password']);
 
         $user = User::create([
             'first_name'=> $request->first_name,
             'last_name'=> $request->last_name,
+            'user_type' => 'user',
             'email' => $request->email,
             'password' => $request->password,
-            'login_date'=> date("d/m/y"),
-
+            'phone' => null,
+            'location' => null,
+            'iD_card' => null,
+            'personal_photo' => null,
+            'property_deed' => null,
+            'clean_record' => null,
+           
         ]);
-        if( $tokenResult = $user->createToken('Personal Access Token')) {
-            $data["message"] = 'User Successfully registered';
-            $data["user_type"] = 'user ';
 
+     
+
+        if ($tokenResult = $user->createToken('Personal Access Token')) {
+            $data["message"] = 'User successfully registered';
+            $data["user_type"] = 'user';
             $data["user"] = $user;
             $data["token_type"] = 'Bearer';
             $data["access_token"] = $tokenResult->accessToken;
@@ -93,27 +104,9 @@ class PassportAuthController extends Controller
             return response()->json($data, Response::HTTP_OK);
         }
 
-             response()->json('error', 401);
-        return response()->json(['error' => ['Email and Password are Wrong.']], 401);
+        return response()->json(['error' => ['Email and Password are wrong.']], 401);
 
     }
-
-
-
-
-    public function logout(Request $request)
-    {
-        $token = $request->user()->token();
-        $token->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
-    }
-
-
-
-
-
 
 
 
@@ -144,6 +137,15 @@ class PassportAuthController extends Controller
             return response()->json(['error' => ['Email and Password are Wrong.']], 401);
         }
     }
+
+
+    public function logout(Request $request)
+    {
+        $token=$request->user()->token();
+        $token->revoke();
+        return response()->json([  'message' => 'Successfully logged out' ]);
+    }
+
 
     
     public function destroy($id)
