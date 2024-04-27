@@ -1,5 +1,5 @@
 # استخدام صورة richarvey/nginx-php-fpm بإصدار 8.2.4 كأساس
-FROM richarvey/nginx-php-fpm:8.2.4
+FROM richarvey/nginx-php-fpm:3.1.3
 
 # نسخ جميع الملفات من المجلد الحالي إلى مجلد العمل في الصورة
 COPY . .
