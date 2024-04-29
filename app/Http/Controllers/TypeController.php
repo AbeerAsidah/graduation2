@@ -80,16 +80,18 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    // public function destroy(string $id)
+    // {
         
-        $type = Type::find($id);
-        if(!$type)
-        {
-            return $this->apiResponse(null ,'the type not found ',404);
-        }
-        $type->delete($id);
-        if($type)
-            return $this->apiResponse(null ,'the type was deleted',200);
-    }
+    //     $type = Type::find($id);
+    //     if(!$type)
+    //     {
+    //         return $this->apiResponse(null ,'the type not found ',404);
+    //     }
+    //     $type->delete($id);
+    //     if($type)
+    //         return $this->apiResponse(null ,'the type was deleted',200);
+    // }
+
+    
 }
