@@ -14,3 +14,7 @@ php artisan route:cache
 
 echo "Running migrations..."
 php artisan migrate --force
+
+
+php artisan passport:install
+php artisan db:seed
